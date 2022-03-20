@@ -9,7 +9,7 @@ import Foundation
 
 struct Athlete {
     let name: String
-    let age: String
+    let age: Int
     let league: String
     let team: String
     

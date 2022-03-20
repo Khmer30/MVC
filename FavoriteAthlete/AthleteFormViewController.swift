@@ -8,8 +8,20 @@
 import UIKit
 
 class AthleteFormViewController: UIViewController {
-    
+   
     var athlete: Athlete?
+    struct PropertyKeys {
+        static let unwindToListSegue = "unwindToListSegue"
+    }
+    
+    init?(coder: NSCoder, athlete: Athlete?) {
+        self.athlete = athlete
+        super.init(coder: coder)
+    }
+    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+    }
 
     @IBOutlet var nameTextField: UITextField!
     @IBOutlet var ageTextField: UITextField!
@@ -26,13 +38,13 @@ class AthleteFormViewController: UIViewController {
         if let athlete = athlete {
             print("confirmed\(athlete)")
             nameTextField.text = athlete.name
-            ageTextField.text = athlete.age
+            ageTextField.text = String(athlete.age)
             leagueTextField.text = athlete.league
             teamTextField.text = athlete.team
         }
 
     }
-
+    
     @IBAction func saveButtonTapped(_ sender: UIButton) {
         guard let name = nameTextField.text,
               let ageString = ageTextField.text,
@@ -41,6 +53,8 @@ class AthleteFormViewController: UIViewController {
               let team = teamTextField.text else {return}
         
         athlete = Athlete(name: name, age: age, league:league, team: team)
+        
+    performSegue(withIdentifier: PropertyKeys.unwindToListSegue, sender: self)
     }
     
 }
